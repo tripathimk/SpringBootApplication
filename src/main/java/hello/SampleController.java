@@ -12,7 +12,7 @@ public class SampleController {
     @RequestMapping("/hello")
     @ResponseBody
     String home() {
-        return "Hello World! NEW<url href='index.jsp'>/index</url>";
+        return "Hello World! NEW";
     }
 
     public static void main(String[] args) throws Exception {
