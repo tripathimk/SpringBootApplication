@@ -5,8 +5,11 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.servlet.ModelAndView;
+import org.springframework.web.servlet.view.RedirectView;
 
 import com.boot.rnd.common.User;
 import com.boot.rnd.models.UserDao;
@@ -36,15 +39,21 @@ public class UserController {
    */
   @RequestMapping(value="/create")
   @ResponseBody
-  public String create(String email, String name) {
+  public ModelAndView create(String email, String name) {
     try {
       User user = new User(email, name);
       userDao.create(user);
+   
+    //return "User succesfully created!";
+    ModelMap model = new ModelMap();
+    model.put(user.getName(), user);
+    
+    return new ModelAndView(
+ 	       new RedirectView("/index.html#/users", true),model);  
     }
     catch (Exception ex) {
-      return "Error creating the user: " + ex.toString();
+      return null;
     }
-    return "User succesfully created!";
   }
   
   /**
@@ -85,17 +94,23 @@ public class UserController {
    */
   @RequestMapping(value="/getAllUser")
   @ResponseBody
-  public List<User> getUserDetailsByEmail(String email) {
+  public ModelAndView getUserDetailsByEmail(String email) {
 	  List<User> users =null;
     try {
        users = userDao.getAll();
+       
+       ModelMap model = new ModelMap();
+       model.put("usersList", users);
+       
+       return new ModelAndView(
+    	       new RedirectView("/index.html#/users", true),model); 
      
     }
     catch (Exception ex) {
     ex.printStackTrace();
       return null;
     }
-    return users;
+    //return users;
   }
   
   

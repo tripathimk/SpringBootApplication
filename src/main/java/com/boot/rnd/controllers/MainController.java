@@ -15,7 +15,7 @@ public class MainController {
   public ModelAndView  index() {
 	  ModelMap model = new ModelMap();
 	    return new ModelAndView(
-	       new RedirectView("/index.jsp", true),model);  
+	       new RedirectView("/index.html", true),model);  
    
   }
 
